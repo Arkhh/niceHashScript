@@ -10,7 +10,7 @@ npm start
 
 go to localhost:8000
 
-to edit the default value for MaxHash and MinHash => /app/scripts/controllers/mainController.js
+to edit the default value for API infos or MaxHash and MinHash go to => /app/scripts/controllers/mainController.js
 
 Open with notepad++ or equivalent.
 

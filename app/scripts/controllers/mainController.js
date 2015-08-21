@@ -96,7 +96,8 @@ angular.module('niceHashManager')
         function calcFilledPercent (currentSpeed, algo) {
             var percent = 0;
 
-            if(algo===3){ // TODO multi algo...
+            //if(algo===3){ // TODO multi algo...
+            if(algo!==undefined){
 
                 if($scope.maxHash.X11<0.05||angular.isNumber($scope.maxHash.X11)===false)
                 {
@@ -232,12 +233,12 @@ angular.module('niceHashManager')
             //$scope.orders[1].limit_speed="0.35"; TEST
             //$scope.orders[2].limit_speed="0.35"; TEST
             angular.forEach($scope.orders, function(order) {
-                if((order.price<=lowestFilledPrice)&&(order.limit_speed<$scope.maxHash.X11))
+                if((order.price<lowestFilledPrice)&&(order.limit_speed<$scope.maxHash.X11))
                 {
                     $scope.ordersToMaxSpeed.push({id:order.id,algo:order.algo});
                 }
 
-                if((order.price>lowestFilledPrice)&&(order.limit_speed>$scope.minHash.X11))
+                if((order.price>=lowestFilledPrice)&&(order.limit_speed>$scope.minHash.X11))
                 {
                     $scope.ordersToMinSpeed.push({id:order.id,algo:order.algo});
                 }

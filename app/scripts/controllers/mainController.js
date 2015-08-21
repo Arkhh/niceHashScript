@@ -3,7 +3,7 @@ angular.module('niceHashManager')
 
 
        $scope.infos = {
-            apiKey: '12b2e6a0-0358-4d23-af63-41e86733c7cb',
+            apiKey: '983e61df-b8aa-4236-85c1-b47b574995ec',
             niceHashID: '19336',
             location: '0',
             algo: '3'
@@ -157,7 +157,7 @@ angular.module('niceHashManager')
                         }
                         else {
                             $scope.errors.push('Data is correct but no orders to show ( check API request in console )')
-                            $scope.botRunning=false;
+                            //$scope.botRunning=false;
                         }
                     }
                     else {
@@ -169,7 +169,7 @@ angular.module('niceHashManager')
                     }
                     else {
                         $scope.errors.push('Error with the API request');
-                        $scope.botRunning=false;
+                        //$scope.botRunning=false;
                     }
 
                 });
@@ -247,13 +247,14 @@ angular.module('niceHashManager')
 
 
         function editOrders(orders, speed){
+            $scope.errors2=[];
 
             //console.log('API call : ' + 'Order ID '+orders[0].id + ' Speed '+speed + ' ALGO: '+orders[0].algo);
 
                 NiceHashAPI.updateSpeed($scope.infos,orders[0].id,speed,orders[0].algo)
                     .then(function (data) {
                         if(data.result.error === undefined){
-                            console.log(data);
+                            //console.log(data);
                             orders.splice(0,1);
                             if(orders.length>0)
                             {
@@ -262,8 +263,14 @@ angular.module('niceHashManager')
                         }
                         else{
                             $scope.errors2.push('API Error: '+data.result.error);
+                            orders.splice(0,1);
+                            if(orders.length>0)
+                            {
+                                setTimeout(function() { editOrders(orders,speed); },5000);
+                            }
                         }
                 });
+            return;
 
 
         }

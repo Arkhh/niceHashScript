@@ -1,0 +1,97 @@
+
+    <div align="center" class="container">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="ApiKeyInput">API Key</label>
+                <input required  ng-model="infos.apiKey" type="text" class="form-control" id="ApiKeyInput"  value="{{infos.apiKey}}" ng-disabled="botRunning">
+            </div>
+            <div class="form-group">
+                <label for="niceHashId">NiceHash ID</label>
+                <input  required ng-model="infos.niceHashID" type="text" class="form-control" id="niceHashId" value="{{niceHashId}}" ng-disabled="botRunning">
+            </div>
+            <br/>
+
+            <select class="form-control"  ng-model="infos.algo"  ng-options="algo.code as algo.name for algo in algo_Association" ng-disabled="botRunning">
+
+            </select>
+
+            <br/>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="infos.location" value="0" checked ng-disabled="botRunning">
+                    Europe
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="infos.location" value="1" ng-disabled="botRunning">
+                    USA
+                </label>
+            </div><br/>
+            <input  type="submit" class="btn btn-default" value="Get Orders" ng-click="processData();" ng-disabled="botRunning">
+
+        </form>
+
+
+    </div>
+
+    <br/>
+    <div align="center" ng-if="errors.length>=1">
+
+        <p ng-repeat="error in errors" class="alert alert-danger" style="width:400px" >{{error}}<br/></p>
+
+    </div>
+
+    <br/>
+
+    <div ng-if="orders.length>0" align="center">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="MaxHash">X11 Max Hash Speed in GH/S</label>
+                <input style="width: 100px;" required ng-model="maxHash.X11" ng-change="refreshPercentage()" type="number" step="0.01"  min="0.05" class="form-control" id="MaxHash"><br/>
+            </div>
+
+
+        </form>
+        <input ng-if="!(botRunning)"  type="submit" class="btn btn-success" value="Launch Bot" ng-click="launchSpeedBot();">
+        <input ng-if="botRunning"  type="submit" class="btn btn-danger" value="Stop Bot" ng-click="stopSpeedBot();">
+        <br/>
+        <br/>
+        <div align="center" ng-if="errors2.length>=1">
+
+            <p ng-repeat="error in errors2" class="alert alert-danger" style="width:400px" >{{error}}<br/></p>
+
+        </div>
+        <br/>
+        <p ng-if="botRunning" class="alert-info"> Don't forget to stop the bot when you want to change infos in the form</p>
+        <br/>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th> Current Speed </th>
+                    <th> Current Max Speed </th>
+                    <th> Price </th>
+                    <th> Algo </th>
+                    <th> % Filled </th>
+                    <th> Status </th>
+                    <th> BTC available</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="order in orders | orderBy:'order.price'">
+
+                <td>{{order.accepted_speed}} GH/s</td>
+                <td>{{order.limit_speed}} GH/s</td>
+                <td>{{order.price}}</td>
+                <td>{{order.algoString}}</td>
+                <td>{{order.percentFilled}}%</td>
+                <td ng-if="order.filled==='Filled'" class="alert alert-success">{{order.filled}}</td>
+                <td ng-if="order.filled!=='Filled'" class="alert alert-danger">{{order.filled}}</td>
+                <td>{{order.btc_avail}}</td>
+
+            </tr>
+        </table>
+    </div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="niceHashManager" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="niceHashManager" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="niceHashManager" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="niceHashManager" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nice Hash Order Manager</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+</head>
+<body>
+
+
+
+<div ng-view></div>
+
+<!--Libs-->
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+
+<!--Core-->
+<script src="app.js"></script>
+
+<!--Controllers-->
+<script src="scripts/controllers/mainController.js"></script>
+
+<!--Services-->
+<script src="scripts/services/requestBuilder.js"></script>
+<script src="scripts/services/niceHashAPI.js"></script>
+
+
+
+<div class="footer" style="bottom: 0px;text-align: center;background-color: white; width:100%;">
+    <footer>
+        <hr>
+        <p>
+            © Arkh  2015</a>
+        </p>
+    </footer>
+</div>
+</body>
+</html>

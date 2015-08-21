@@ -14,6 +14,7 @@ angular.module('niceHashManager')
         var orderBy = $filter('orderBy');
         $scope.botRunning =false;
         $scope.maxHash={X11:0.35}; // max hash value for X11
+        //$scope.maxHash={X11:0.1}; // Example if you want to change the value to 0.1
         $scope.minHash={X11:0.05}; // min hash value for X11
 
         $scope.algo_Association = [
@@ -203,6 +204,9 @@ angular.module('niceHashManager')
                 }
 
             }
+            else{
+                editOrders($scope.orders, $scope.maxHash.X11); // No orders filled so price = 0 then we have to set all the orders to MAX hash
+            }
             $scope.launchSpeedBot();
 
 
@@ -210,7 +214,7 @@ angular.module('niceHashManager')
         }
 
         function getHighestFilledOrder(){
-            var price = $scope.orders[0].price;
+            var price = 0;
             //$scope.orders[0].filled='true'; //TEST
             //$scope.orders[1].filled='true'; //TEST
             //$scope.orders[2].filled='true'; //TEST
@@ -233,12 +237,12 @@ angular.module('niceHashManager')
             //$scope.orders[1].limit_speed="0.35"; TEST
             //$scope.orders[2].limit_speed="0.35"; TEST
             angular.forEach($scope.orders, function(order) {
-                if((order.price<lowestFilledPrice)&&(order.limit_speed<$scope.maxHash.X11))
+                if((order.price<=lowestFilledPrice)&&(order.limit_speed<$scope.minHash.X11))
                 {
                     $scope.ordersToMaxSpeed.push({id:order.id,algo:order.algo});
                 }
 
-                if((order.price>=lowestFilledPrice)&&(order.limit_speed>$scope.minHash.X11))
+                if((order.price>lowestFilledPrice)&&(order.limit_speed>$scope.minHash.X11))
                 {
                     $scope.ordersToMinSpeed.push({id:order.id,algo:order.algo});
                 }
@@ -249,7 +253,6 @@ angular.module('niceHashManager')
 
         function editOrders(orders, speed){
             $scope.errors2=[];
-
             //console.log('API call : ' + 'Order ID '+orders[0].id + ' Speed '+speed + ' ALGO: '+orders[0].algo);
 
                 NiceHashAPI.updateSpeed($scope.infos,orders[0].id,speed,orders[0].algo)

@@ -121,6 +121,7 @@ angular.module('niceHashManager')
                             setTimeout(function() { return; },5000);
                     }
                     else{
+                        console.log(data.result);
                         $scope.errors2.push('API Error Refill : '+data.result.error);
                     }
                 });
@@ -215,12 +216,12 @@ angular.module('niceHashManager')
 
         function getHighestFilledOrder(){
             var price = 0;
-            //$scope.orders[0].filled='true'; //TEST
-            //$scope.orders[1].filled='true'; //TEST
-            //$scope.orders[2].filled='true'; //TEST
+            //$scope.orders[0].filled='Filled'; //TEST
+            //$scope.orders[1].filled='Filled'; //TEST
+            //$scope.orders[2].filled='Filled'; //TEST
 
             angular.forEach($scope.orders, function(order) {
-                if(order.filled==='true')
+                if(order.filled==='Filled')
                 {
                     price=order.price;
                 }
@@ -253,6 +254,11 @@ angular.module('niceHashManager')
 
         function editOrders(orders, speed){
             $scope.errors2=[];
+            if(speed===$scope.maxHash.X11){
+                if(orders[0].limit_speed==$scope.maxHash.X11){
+
+                }
+            }
             //console.log('API call : ' + 'Order ID '+orders[0].id + ' Speed '+speed + ' ALGO: '+orders[0].algo);
 
                 NiceHashAPI.updateSpeed($scope.infos,orders[0].id,speed,orders[0].algo)

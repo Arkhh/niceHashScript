@@ -28,7 +28,7 @@ angular.module('niceHashManager')
         function refillOrder(infos, orderId, amount,algo){
             return requestBuilder.getRequestPromise({
                 method         : 'POST',
-                url            : API_ENDPOINT + 'orders.refill&id='+infos.niceHashID+'&key='+infos.apiKey+'&location='+infos.location+'&algo='+algo+'&order='+orderId+'&limit='+amount
+                url            : API_ENDPOINT + 'orders.refill&id='+infos.niceHashID+'&key='+infos.apiKey+'&location='+infos.location+'&algo='+algo+'&order='+orderId+'&amount='+amount
             });
         }
 

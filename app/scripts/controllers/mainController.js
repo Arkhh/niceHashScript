@@ -238,27 +238,39 @@ angular.module('niceHashManager')
             //$scope.orders[1].limit_speed="0.35"; TEST
             //$scope.orders[2].limit_speed="0.35"; TEST
             angular.forEach($scope.orders, function(order) {
-                if((order.price<=lowestFilledPrice)&&(order.limit_speed<$scope.minHash.X11))
+                if(order.price<=lowestFilledPrice)
                 {
-                    $scope.ordersToMaxSpeed.push({id:order.id,algo:order.algo});
+                    $scope.ordersToMaxSpeed.push({id:order.id,algo:order.algo,limit_speed:order.limit_speed});
                 }
 
-                if((order.price>lowestFilledPrice)&&(order.limit_speed>$scope.minHash.X11))
+                if(order.price>lowestFilledPrice)
                 {
-                    $scope.ordersToMinSpeed.push({id:order.id,algo:order.algo});
+                    $scope.ordersToMinSpeed.push({id:order.id,algo:order.algo,limit_speed:order.limit_speed});
                 }
-
             });
         }
 
 
         function editOrders(orders, speed){
             $scope.errors2=[];
+
             if(speed===$scope.maxHash.X11){
                 if(orders[0].limit_speed==$scope.maxHash.X11){
-
+                    orders.splice(0,1);
+                    if(orders.length>0) {
+                        editOrders(orders, speed);
+                    }
                 }
             }
+            if(speed===$scope.minHash.X11){
+                if(orders[0].limit_speed==$scope.minHash.X11){
+                    orders.splice(0,1);
+                    if(orders.length>0) {
+                        editOrders(orders, speed);
+                    }
+                }
+            }
+
             //console.log('API call : ' + 'Order ID '+orders[0].id + ' Speed '+speed + ' ALGO: '+orders[0].algo);
 
                 NiceHashAPI.updateSpeed($scope.infos,orders[0].id,speed,orders[0].algo)
@@ -272,7 +284,7 @@ angular.module('niceHashManager')
                             }
                         }
                         else{
-                            $scope.errors2.push('API Error: '+data.result.error);
+                            $scope.errors2.push(orders[0].id + ' Order update returned an API Error: '+data.result.error);
                             orders.splice(0,1);
                             if(orders.length>0)
                             {

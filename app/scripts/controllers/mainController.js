@@ -267,48 +267,47 @@ angular.module('niceHashManager')
 
         function editOrders(orders, speed){
             $scope.errors2=[];
-
-            if(speed===$scope.maxHash.X11){
-                if(orders[0].limit_speed==$scope.maxHash.X11){
-                    orders.splice(0,1);
-                    if(orders.length>0) {
-                        editOrders(orders, speed);
+            if(orders[0]!==undefined){
+                if(speed===$scope.maxHash.X11){
+                    if(orders[0].limit_speed==$scope.maxHash.X11){
+                        orders.splice(0,1);
+                        if(orders.length>0) {
+                            editOrders(orders, speed);
+                        }
                     }
                 }
-            }
-            if(speed===$scope.minHash.X11){
-                if(orders[0].limit_speed==$scope.minHash.X11){
-                    orders.splice(0,1);
-                    if(orders.length>0) {
-                        editOrders(orders, speed);
+                if(speed===$scope.minHash.X11){
+                    if(orders[0].limit_speed==$scope.minHash.X11){
+                        orders.splice(0,1);
+                        if(orders.length>0) {
+                            editOrders(orders, speed);
+                        }
                     }
                 }
+
+                //console.log('API call : ' + 'Order ID '+orders[0].id + ' Speed '+speed + ' ALGO: '+orders[0].algo);
+
+                    NiceHashAPI.updateSpeed($scope.infos,orders[0].id,speed,orders[0].algo)
+                        .then(function (data) {
+                            if(data.result.error === undefined){
+                                //console.log(data);
+                                orders.splice(0,1);
+                                if(orders.length>0)
+                                {
+                                    setTimeout(function() { editOrders(orders,speed); },5000);
+                                }
+                            }
+                            else{
+                                $scope.errors2.push(orders[0].id + ' Order update returned an API Error: '+data.result.error);
+                                orders.splice(0,1);
+                                if(orders.length>0)
+                                {
+                                    setTimeout(function() { editOrders(orders,speed); },5000);
+                                }
+                            }
+                    });
             }
-
-            //console.log('API call : ' + 'Order ID '+orders[0].id + ' Speed '+speed + ' ALGO: '+orders[0].algo);
-
-                NiceHashAPI.updateSpeed($scope.infos,orders[0].id,speed,orders[0].algo)
-                    .then(function (data) {
-                        if(data.result.error === undefined){
-                            //console.log(data);
-                            orders.splice(0,1);
-                            if(orders.length>0)
-                            {
-                                setTimeout(function() { editOrders(orders,speed); },5000);
-                            }
-                        }
-                        else{
-                            $scope.errors2.push(orders[0].id + ' Order update returned an API Error: '+data.result.error);
-                            orders.splice(0,1);
-                            if(orders.length>0)
-                            {
-                                setTimeout(function() { editOrders(orders,speed); },5000);
-                            }
-                        }
-                });
             return;
-
-
         }
 
 

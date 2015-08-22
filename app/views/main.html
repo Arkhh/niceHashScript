@@ -67,6 +67,9 @@
         </div>
         <br/>
         <p ng-if="botRunning" class="alert-info"> Don't forget to stop the bot when you want to change infos in the form</p>
+        <p ng-if="balance>0.5" class="alert-success">  NiceHash account balance : [{{balance}}]</p>
+        <p ng-if="balance>0.1&&balance<0.5" class="alert-info">  NiceHash account balance : [{{balance}}]</p>
+        <p ng-if="balance<0.1" class="alert-danger">  NiceHash account balance : [{{balance}}]</p>
         <br/>
 
         <table class="table table-hover table-bordered">
@@ -79,7 +82,6 @@
                     <th> % Filled </th>
                     <th> Status </th>
                     <th> BTC available </th>
-                    <th>[Balance]</th>
                 </tr>
             </thead>
             <tr ng-repeat="order in orders | orderBy:'order.price'">
@@ -92,8 +94,6 @@
                 <td ng-if="order.filled==='Filled'" class="alert alert-success">{{order.filled}}</td>
                 <td ng-if="order.filled!=='Filled'" class="alert alert-danger">{{order.filled}}</td>
                 <td>{{order.btc_avail}}</td>
-                <td>[{{balance}}]</td>
-
             </tr>
         </table>
     </div>

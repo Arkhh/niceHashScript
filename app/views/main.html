@@ -78,7 +78,8 @@
                     <th> Algo </th>
                     <th> % Filled </th>
                     <th> Status </th>
-                    <th> BTC available</th>
+                    <th> BTC available </th>
+                    <th>[Balance]</th>
                 </tr>
             </thead>
             <tr ng-repeat="order in orders | orderBy:'order.price'">
@@ -91,6 +92,7 @@
                 <td ng-if="order.filled==='Filled'" class="alert alert-success">{{order.filled}}</td>
                 <td ng-if="order.filled!=='Filled'" class="alert alert-danger">{{order.filled}}</td>
                 <td>{{order.btc_avail}}</td>
+                <td>[{{balance}}]</td>
 
             </tr>
         </table>

@@ -11,10 +11,17 @@ angular.module('niceHashManager')
 
         function getOrders(infos){
 
-
             return requestBuilder.getRequestPromise({
                 method: 'GET',
                 url: API_ENDPOINT + 'orders.get&my=&id=' + infos.niceHashID + '&key=' + infos.apiKey + '&location=' + infos.location + '&algo=' + infos.algo
+            });
+        }
+
+        function getBalance(infos){
+
+            return requestBuilder.getRequestPromise({
+                method: 'GET',
+                url: API_ENDPOINT + 'balance&id=' + infos.niceHashID + '&key=' + infos.apiKey
             });
         }
 
@@ -38,7 +45,8 @@ angular.module('niceHashManager')
         return {
             "getOrders"            : getOrders,
             "updateSpeed"          : updateSpeed,
-            "refillOrder"          : refillOrder
+            "refillOrder"          : refillOrder,
+            "getBalance"           : getBalance
         };
 
     });

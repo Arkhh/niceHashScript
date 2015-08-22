@@ -9,6 +9,8 @@ angular.module('niceHashManager')
             algo: '3'
         };
 
+        $scope.balance=0;
+
 
 
         var orderBy = $filter('orderBy');
@@ -154,6 +156,7 @@ angular.module('niceHashManager')
                             $scope.orders = orderBy($scope.orders, '+order.price');
                             console.log($scope.orders);
                             $scope.refreshPercentage();
+                            getBalance();
 
 
 
@@ -211,6 +214,17 @@ angular.module('niceHashManager')
             $scope.launchSpeedBot();
 
 
+
+        }
+
+
+        function getBalance(){
+            NiceHashAPI.getBalance($scope.infos)
+                .then(function (data) {
+                    $scope.balance = data.result.balance_confirmed;
+                },function(message){
+                    console.log("Can't get balance : "+message);
+                });
 
         }
 

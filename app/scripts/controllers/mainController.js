@@ -267,7 +267,8 @@ angular.module('niceHashManager')
 
         function editOrders(orders, speed){
             $scope.errors2=[];
-            if(orders[0]!==undefined){
+            /*
+            if(orders[0].id!==undefined){
                 if(speed===$scope.maxHash.X11){
                     if(orders[0].limit_speed==$scope.maxHash.X11){
                         orders.splice(0,1);
@@ -283,7 +284,7 @@ angular.module('niceHashManager')
                             editOrders(orders, speed);
                         }
                     }
-                }
+                }*/
 
                 //console.log('API call : ' + 'Order ID '+orders[0].id + ' Speed '+speed + ' ALGO: '+orders[0].algo);
 
@@ -306,7 +307,7 @@ angular.module('niceHashManager')
                                 }
                             }
                     });
-            }
+
             return;
         }
 

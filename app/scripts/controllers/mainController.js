@@ -162,7 +162,7 @@ angular.module('niceHashManager')
 
                         }
                         else {
-                            $scope.errors.push('Data is correct but no orders to show ( check API request in console )')
+                            $scope.errors.push('Data is correct but no orders to show ( check API request in console )');
                             //$scope.botRunning=false;
                         }
                     }
@@ -209,7 +209,7 @@ angular.module('niceHashManager')
 
             }
             else{
-                var found = $filter('filter')($scope.orders, function(order) {return order.limit_speed !== $scope.maxHash.X11;});
+                var found = $filter('filter')($scope.orders, function(order) {return order.limit_speed < $scope.maxHash.X11;});
                 if (found.length) {
                     $scope.ordersToMaxSpeed=  found;
                     editOrders($scope.ordersToMaxSpeed, $scope.maxHash.X11); // No orders filled so price = 0 then we have to set all the orders to MAX hash

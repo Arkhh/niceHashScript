@@ -209,7 +209,15 @@ angular.module('niceHashManager')
 
             }
             else{
-                editOrders($scope.orders, $scope.maxHash.X11); // No orders filled so price = 0 then we have to set all the orders to MAX hash
+                var found = $filter('filter')($scope.orders, function(order) {return order.limit_speed !== $scope.maxHash.X11;});
+                if (found.length) {
+                    $scope.ordersToMaxSpeed=  found;
+                    editOrders($scope.ordersToMaxSpeed, $scope.maxHash.X11); // No orders filled so price = 0 then we have to set all the orders to MAX hash
+
+                } else {
+
+                }
+
             }
             $scope.launchSpeedBot();
 
@@ -252,14 +260,14 @@ angular.module('niceHashManager')
             //$scope.orders[1].limit_speed="0.35"; TEST
             //$scope.orders[2].limit_speed="0.35"; TEST
             angular.forEach($scope.orders, function(order) {
-                if(order.price<=lowestFilledPrice)
+                if((order.price<=lowestFilledPrice)&& (order.limit_speed<$scope.maxHash.X11))
                 {
-                    $scope.ordersToMaxSpeed.push({id:order.id,algo:order.algo,limit_speed:order.limit_speed});
+                    $scope.ordersToMaxSpeed.push({id:order.id,algo:order.algo});
                 }
 
-                if(order.price>lowestFilledPrice)
+                if((order.price>lowestFilledPrice)&& (order.limit_speed>$scope.minHash.X11))
                 {
-                    $scope.ordersToMinSpeed.push({id:order.id,algo:order.algo,limit_speed:order.limit_speed});
+                    $scope.ordersToMinSpeed.push({id:order.id,algo:order.algo});
                 }
             });
         }
